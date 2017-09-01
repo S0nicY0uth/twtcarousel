@@ -11,6 +11,13 @@ var T = new Twit({
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 });
 
+app.use(function(req, res, next){
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+  res.header('Access-Control-Allow-Headers', "Content-Type");
+
+})
+
 var params = { screen_name: '@phenixtest', count: 100 };
 
 T.get('statuses/user_timeline', params, gotData);
