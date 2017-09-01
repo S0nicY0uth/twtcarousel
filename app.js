@@ -8,14 +8,30 @@ var T = new Twit({
   access_token_secret:  'DcooVvgPYBC02WWeydxu9Azf8qFhgRvckLUws2qOBPhwc',
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 });
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+};
+
+app.configure(function () {
+  app.use(allowCrossDomain);
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(path.join(application_root, "public")));
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
 var params = { screen_name: '@phenixtest', count: 100 };
-
-//header shit
-
-var cors = require('cors');
-
-// use it before all route definitions
-app.use(cors({origin: 'http://www.bail.phenixcustomers.co.uk/'}));
 
 T.get('statuses/user_timeline', params, gotData);
 
