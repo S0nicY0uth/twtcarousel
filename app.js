@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var cors = require('cors');
+app.use(cors({origin: '*'}));
 var Twit = require('twit');
 var T = new Twit({
   consumer_key:         'gbRgf2rBOJ0YNZzB0e9BDiT4l',
@@ -8,8 +10,7 @@ var T = new Twit({
   access_token_secret:  'DcooVvgPYBC02WWeydxu9Azf8qFhgRvckLUws2qOBPhwc',
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 });
-var cors = require('cors');
-app.use(cors({origin: 'http://www.bail.phenixcustomers.co.uk/'}));
+
 var params = { screen_name: '@phenixtest', count: 100 };
 
 T.get('statuses/user_timeline', params, gotData);
