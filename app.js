@@ -1,7 +1,15 @@
 var express = require('express');
 var app = express();
-var cors = require('cors');
-app.use(cors({origin: '*'}));
+// var cors = require('cors');
+// app.use(cors({origin: '*'}));
+
+app.use(function(req, res, next){
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+  res.header('Access-Control-Allow-Headers', "Content-Type");
+
+});
+
 var Twit = require('twit');
 var T = new Twit({
   consumer_key:         'gbRgf2rBOJ0YNZzB0e9BDiT4l',
@@ -10,13 +18,6 @@ var T = new Twit({
   access_token_secret:  'DcooVvgPYBC02WWeydxu9Azf8qFhgRvckLUws2qOBPhwc',
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 });
-
-app.use(function(req, res, next){
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header('Access-Control-Allow-Headers', "Content-Type");
-
-})
 
 var params = { screen_name: '@phenixtest', count: 100 };
 
