@@ -1,15 +1,5 @@
 var express = require('express');
 var app = express();
-// var cors = require('cors');
-// app.use(cors({origin: '*'}));
-
-app.use(function(req, res, next){
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header('Access-Control-Allow-Headers', "Content-Type");
-
-});
-
 var Twit = require('twit');
 var T = new Twit({
   consumer_key:         'gbRgf2rBOJ0YNZzB0e9BDiT4l',
@@ -18,7 +8,6 @@ var T = new Twit({
   access_token_secret:  'DcooVvgPYBC02WWeydxu9Azf8qFhgRvckLUws2qOBPhwc',
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 });
-
 var params = { screen_name: '@phenixtest', count: 100 };
 
 T.get('statuses/user_timeline', params, gotData);
@@ -31,3 +20,9 @@ function gotData(err, data, response) {
   }
 }
 
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
