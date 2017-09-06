@@ -9,7 +9,7 @@ var T = new Twit({
   access_token_secret:  'DcooVvgPYBC02WWeydxu9Azf8qFhgRvckLUws2qOBPhwc',
   timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
 });
-var params = { screen_name: '@phenixtest', count: 100, include_entities: true };
+var params = { screen_name: '@BailElectrical', count: 100, include_entities: true };
 var tweets = [];
 T.get('statuses/user_timeline', params, gotData).catch(function (err) {
     console.log('caught error', err.stack)
@@ -19,10 +19,13 @@ T.get('statuses/user_timeline', params, gotData).catch(function (err) {
     // I now have the returned data from Twitter API as variable result.data, also the array we returned, tweets
     // console.log('data', result.data);
     // console.log(tweets);
+
+
     //Express Stuff!
+    //git add .
+    //git commit -m "adding header info attempt 13"
+    //git push heroku master
     app.get('/', function (req, res) {
-
-
 
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -47,9 +50,7 @@ function gotData(err, data, response) {
         'status': data[i].text,
         'user_info': data[i].user,
         'entities': data[i].entities
-
       }
-
     );
   }
   return tweets;
